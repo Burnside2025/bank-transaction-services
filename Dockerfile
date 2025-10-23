@@ -1,4 +1,4 @@
-FROM amazoncorretto:17.0.6 as build
+FROM amazoncorretto:17.0.17 as build
 WORKDIR /workspace/app
 
 COPY mvnw .
@@ -9,7 +9,7 @@ COPY src src
 RUN ./mvnw install -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
-FROM amazoncorretto:17.0.6
+FROM amazoncorretto:17.0.17
 VOLUME /main-app
 ARG DEPENDENCY=/workspace/app/target/dependency
 COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
